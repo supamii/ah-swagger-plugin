@@ -1,8 +1,9 @@
 {
   "author": "Son-Huy Pham <huytard.pham@gmail.com>",
-  "name": "swaggerhero",
+  "name": "ah-swagger-plugin",
   "description": "Actionhero plugin that supports swagger",
-  "version": "0.0.1",
+  "url" : "https://github.com/supamii/ah-swagger-plugin",
+  "version": "0.0.2",
   "dependencies": {
   },
   "devDependencies": {
