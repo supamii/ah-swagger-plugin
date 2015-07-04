@@ -1,0 +1,11 @@
+*.log
+*.txt
+*.swp
+*.DS_Store
+/.tern-project
+/.settings/
+/.settings/*
+/log
+/log/*
+/node_modules/
+/node_modules/*
