@@ -1,6 +1,9 @@
 # ah-swagger-plugin
 Generate Swagger-UI documentation from Actionhero
 
+***
+**[NPM](https://www.npmjs.com/package/ah-swagger-plugin) | [GitHub](https://github.com/supamii/ah-swagger-plugin)**
+***
 
 ## Install
 
