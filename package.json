@@ -9,6 +9,7 @@
     "type": "git",
     "url" : "git://github.com/supamii/ah-swagger-plugin.git"
   },
+  "bugs" : "https://github.com/supamii/ah-swagger-plugin/issues",
   "keywords": [
     "swagger",
     "actionhero",
