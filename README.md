@@ -7,7 +7,6 @@ Generate Swagger-UI documentation from Actionhero
 
 [![NPM](https://nodei.co/npm/ah-swagger-plugin.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ah-swagger-plugin/)
 
-
 ## Install
 
 - `npm install ah-swagger-plugin --save`
@@ -15,7 +14,7 @@ Generate Swagger-UI documentation from Actionhero
 
 ## Configuration
 
-To override configurations, override values set under api.config.swagger.  Define this in an Actionhero configuration file:
+To override default configurations, define the namespace api.config.swagger:
 
 ```javascript
 exports['default'] = { 
@@ -43,9 +42,45 @@ exports['default'] = {
 ```
 
 ## Overview
-This plugin will create an end-point that analyzes your Actionhero routes at runtime and returns JSON for swagger to consume.
+This plugin will create an end-point that analyzes your Actionhero routes and provides JSON for swagger to consume.
 
-For ease of use, a default swagger.html is provided under the default ./public/ folder.
+For simplicity, a default swagger.html is provided under the default ./public/ folder.  Contents are directly from the pre-compiled swagger-ui package.
+
+Below is an example of how an action can be defined:
+
+```javascript
+exports.myAction = {
+  name: 'myAction',
+  summary: 'A simple summary of my action',
+  description: 'A detailed description of my action.',
+  inputs: {
+    required: [ 'myParam' ],
+    // Each input parameter needs to be defined as a property, including input parameters for routes.
+    myParam: {
+      description: 'A detailed description of myParam',
+      required: true,
+      // Define this as an enum if you want to specify the list of possible values.
+      enum: [ 'value1', 'value2', 'value3' ]
+    }
+  },
+  // For the body of a post/put, specify example output.
+  modelSchema: {
+    myParam: {
+      type: 'string',
+      example: 'value1'
+    },
+    otherData: {
+      type: 'string',
+      example: '-data1'
+    }
+  },
+  // A tag will group/organize actions together
+  tags: [ 'Examples' ],
+  run: function(api, data, next) {
+    next();
+  }
+};
+```
 
 LIMITATIONS:
 * Using an API key with a file-multiform-upload doesn't work as expected

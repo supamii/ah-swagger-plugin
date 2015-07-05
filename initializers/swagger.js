@@ -47,7 +47,7 @@ module.exports = {
           version: "" + config.general.apiVersion
         },
 
-        host: (api.config.swagger.baseUrl || bindIp) + ':' + serverPort,
+        host: (config.swagger.baseUrl || bindIp) + ':' + serverPort,
         actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
         schemes: [ 'http' ],
@@ -80,7 +80,7 @@ module.exports = {
               properties: {}
             };
 
-            if (api.config.swagger.documentSimpleRoutes === false) {
+            if (config.swagger.documentSimpleRoutes === false) {
               continue;
             }
 
@@ -133,11 +133,11 @@ module.exports = {
               definition.required = required;
             }
 
-            if (api.config.swagger.groupBySimpleActionTag) {
+            if (config.swagger.groupBySimpleActionTag) {
               tags.push('actions');
             }
 
-            if (api.config.swagger.groupByVersionTag) {
+            if (config.swagger.groupByVersionTag) {
               tags.push(version);
             }
 
@@ -179,15 +179,15 @@ module.exports = {
           }
         }
 
-        if (api.config.routes && api.config.swagger.documentConfigRoutes !== false) {
-          for ( var method in api.config.routes) {
-            var routes = api.config.routes[method];
+        if (config.routes && config.swagger.documentConfigRoutes !== false) {
+          for ( var method in config.routes) {
+            var routes = config.routes[method];
             for (var l = 0, len1 = routes.length; l < len1; l++) {
               var route = routes[l];
 
               var shouldSkip = false;
-              for (var i = 0; i < api.config.swagger.ignoreRoutes.length; ++i) {
-                shouldSkip = (route.path.indexOf(api.config.swagger.ignoreRoutes[i]) >= 0)
+              for (var i = 0; i < config.swagger.ignoreRoutes.length; ++i) {
+                shouldSkip = (route.path.indexOf(config.swagger.ignoreRoutes[i]) >= 0)
                 if (shouldSkip)
                   break;
               }
@@ -202,24 +202,16 @@ module.exports = {
                 var required = [];
 
                 var tags = action.tags || [];
-                for ( var i in api.config.swagger.routeTags) {
-                  for ( var r in api.config.swagger.routeTags[i]) {
-                    if (route.path.indexOf(api.config.swagger.routeTags[i][r]) > 0) {
+                for ( var i in config.swagger.routeTags) {
+                  for ( var r in config.swagger.routeTags[i]) {
+                    if (route.path.indexOf(config.swagger.routeTags[i][r]) > 0) {
                       tags.push(i);
                       break;
                     }
                   }
                 }
-                var pathList = route.path.split('/');
-                pathList.forEach(function(p) {
-                  for ( var i in api.config.swagger.routeTags) {
-                    if (api.utils.inArray(p, api.config.swagger.routeTags[i])) {
-                      tags.push(i);
-                    }
-                  }
-                });
 
-                if (api.config.swagger.groupByVersionTag) {
+                if (config.swagger.groupByVersionTag) {
                   tags.push(version);
                 }
 
