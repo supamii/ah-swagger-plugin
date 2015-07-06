@@ -124,6 +124,11 @@ TODOs:
 * Follow up to see how swagger will honor the 'required' param type
 * Include tests
 
+## Credit
+
+Props go out to @BoLaMN for laying the ground work on cracking the swagger translation from Actionhero.
+
+
 ## License
 The MIT License (MIT)
 
