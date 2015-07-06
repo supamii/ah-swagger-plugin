@@ -220,29 +220,27 @@ module.exports = {
 
                 var params = {};
 
-                var path = route.path
-                    .replace(/\/:([\w]*)/g, function(match, p1) {
-                      if (p1 === 'apiVersion') {
-                        return '/' + version;
-                      }
-                      // If p1 (the parameter) is already included in the path, skip it since it'll
-                      // be handled in the route-centric format anyway.
-                      if (typeof action.inputs[p1] !== 'undefined' && action.inputs[p1] !== null) {
-                        params[p1] = true;
-                        return "/{" + p1 + "}";
-                      }
+                var path = route.path.replace(/\/:([\w]*)/g, function(match, p1) {
+                  if (p1 === 'apiVersion') {
+                    return '/' + version;
+                  }
+                  // If p1 (the parameter) is already included in the path, skip it since it'll
+                  // be handled in the route-centric format anyway.
+                  if (typeof action.inputs[p1] !== 'undefined' && action.inputs[p1] !== null) {
+                    params[p1] = true;
+                    return "/{" + p1 + "}";
+                  }
 
-                      parameters.push({
-                        $ref: "#/parameters/" + route.action + version + "_" + p1 + "_path"
-                      });
-                      api.swagger.documentation.parameters[route.action + version + "_" + p1 +
-                                                           "_path"] = {
-                        name: p1,
-                        "in": 'path',
-                        type: 'string'
-                      };
-                      return "/{" + p1 + "}";
-                    });
+                  parameters.push({
+                    $ref: "#/parameters/" + route.action + version + "_" + p1 + "_path"
+                  });
+                  api.swagger.documentation.parameters[route.action + version + "_" + p1 + "_path"] = {
+                    name: p1,
+                    "in": 'path',
+                    type: 'string'
+                  };
+                  return "/{" + p1 + "}";
+                });
 
                 if (!api.swagger.documentation.paths["" + path]) {
                   api.swagger.documentation.paths["" + path] = {};
@@ -253,7 +251,14 @@ module.exports = {
                     continue;
                   }
                   var input = action.inputs[key];
-                  api.swagger.documentation.parameters[route.action + version + "_" + key] = {
+
+                  // Unlike simple routes above, we'll need to distinguish between a path type
+                  // (param for url portion) and then a query type (param for query string).
+
+                  var paramType = input.paramType || (params[key] ? 'path' : 'query');
+                  var paramStr = route.action + version + "_" + paramType + "_" + key;
+
+                  api.swagger.documentation.parameters[paramStr] = {
                     name: key,
                     "in": input.paramType || (params[key] ? 'path' : 'query'),
                     type: input.dataType || 'string',
@@ -261,7 +266,7 @@ module.exports = {
                     description: input.description || undefined
                   };
                   parameters.push({
-                    $ref: "#/parameters/" + route.action + version + "_" + key
+                    $ref: "#/parameters/" + paramStr
                   });
                   definition.properties[key] = {
                     type: 'string'
