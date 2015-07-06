@@ -11,6 +11,39 @@ Generate Swagger-UI documentation from Actionhero
 
 - `npm install ah-swagger-plugin --save`
 
+Be sure to specify the location of the installed plugin in /config/api.js
+
+For example, if you list ah-swagger-plugin as an NPM dependency you can point directly to node_modules:
+
+```javascript
+// ...
+// configuration for your actionhero project structure
+paths: {
+  //... 
+  'plugin': [ __dirname + '/../node_modules' ]
+},
+```
+
+## Setup
+
+As we do for all Actionhero plugins, add an entry 'ah-swagger-plugin' to /config/plugins.js
+
+```javascript
+exports['default'] = {
+  general: function(api)
+  {
+    return {
+      plugins: [
+        // ...
+        'ah-swagger-plugin'
+        
+      ]
+    };
+  }
+};
+```
+
+For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/core/plugins.html).
 
 ## Configuration
 
@@ -87,9 +120,8 @@ LIMITATIONS:
 
 TODOs:
 
-* Make swagger html files optional
-* Describe swagger fields for each action
-* Include more examples for action descriptions
+* Make swagger html files optional or easily over-ridden
+* Follow up to see how swagger will honor the 'required' param type
 * Include tests
 
 ## License
