@@ -24,64 +24,74 @@
 
   <script type="text/javascript">
     $(function () {
-      var url = window.location.search.match(/url=([^&]+)/);
-      if (url && url.length > 1) {
-        url = decodeURIComponent(url[1]);
-      } else {
-        // Assumes that all projects are using the /api/ end-point... 
-        // TODO: We need a scheme to read in configurations later.
-        url = "/api/swagger";
-      }
-      window.swaggerUi = new SwaggerUi({
-        url: url,
-        dom_id: "swagger-ui-container",
-        supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-        onComplete: function(swaggerApi, swaggerUi){
-          if(typeof initOAuth == "function") {
-            initOAuth({
-              clientId: "your-client-id",
-              realm: "your-realms",
-              appName: "your-app-name"
-            });
-          }
-
-          $('pre code').each(function(i, e) {
-            hljs.highlightBlock(e)
+      // Somewhat of a stop-gap for the interim until we can fully detect local server settings.
+      var d = $.Deferred();
+      var url = '/api?action=swagger';
+      $.get('/api?action=swagger', function(data) {
+        if(data.error) {
+          $.get('/api/swagger', function(data) {
+            url = '/api/swagger';
+            d.resolve(url);
           });
-
-          addApiKeyAuthorization();
-        },
-        onFailure: function(data) {
-          log("Unable to Load SwaggerUI");
-        },
-        docExpansion: "none",
-        apisSorter: "alpha"
+        } else {
+          d.resolve(url);
+        }
+      }).fail(function() {
+        url = '/api/swagger';
+        d.resolve(url);
       });
-
-      function addApiKeyAuthorization(){
-        var key = encodeURIComponent($('#input_apiKey')[0].value);
-        if(key && key.trim() != "") {
-            var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
-            window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-            log("added key " + key);
+      d.promise().then(function(url) {
+        window.swaggerUi = new SwaggerUi({
+          url: url,
+          dom_id: "swagger-ui-container",
+          supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+          onComplete: function(swaggerApi, swaggerUi){
+            if(typeof initOAuth == "function") {
+              initOAuth({
+                clientId: "your-client-id",
+                realm: "your-realms",
+                appName: "your-app-name"
+              });
+            }
+  
+            $('pre code').each(function(i, e) {
+              hljs.highlightBlock(e)
+            });
+  
+            addApiKeyAuthorization();
+          },
+          onFailure: function(data) {
+            log("Unable to Load SwaggerUI");
+          },
+          docExpansion: "none",
+          apisSorter: "alpha"
+        });
+  
+        function addApiKeyAuthorization(){
+          var key = encodeURIComponent($('#input_apiKey')[0].value);
+          if(key && key.trim() != "") {
+              var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
+              window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
+              log("added key " + key);
+          }
         }
-      }
-
-      $('#input_apiKey').change(addApiKeyAuthorization);
-
-      // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
-      /*
-        var apiKey = "myApiKeyXXXX123456789";
-        $('#input_apiKey').val(apiKey);
-      */
-
-      window.swaggerUi.load();
-
-      function log() {
-        if ('console' in window) {
-          console.log.apply(console, arguments);
+  
+        $('#input_apiKey').change(addApiKeyAuthorization);
+  
+        // if you have an apiKey you would like to pre-populate on the page for demonstration purposes...
+        /*
+          var apiKey = "myApiKeyXXXX123456789";
+          $('#input_apiKey').val(apiKey);
+        */
+  
+        window.swaggerUi.load();
+  
+        function log() {
+          if ('console' in window) {
+            console.log.apply(console, arguments);
+          }
         }
-      }
+      }); // End promise
     });
   </script>
 </head>
