@@ -25,6 +25,8 @@
   <script type="text/javascript">
     $(function () {
       // Somewhat of a stop-gap for the interim until we can fully detect local server settings.
+      // Might need to consider local storage or something to ease this.  Or even dynamically 
+      // generate this file on start-up so we won't have to rely on this detection.
       var d = $.Deferred();
       var url = '/api?action=swagger&secure=' + (window.location.protocol.indexOf('https') >= 0);
       $.get(url, function(data) {
