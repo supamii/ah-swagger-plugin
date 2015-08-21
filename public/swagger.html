@@ -26,18 +26,18 @@
     $(function () {
       // Somewhat of a stop-gap for the interim until we can fully detect local server settings.
       var d = $.Deferred();
-      var url = '/api?action=swagger&isSecure=' + (window.location.protocol.indexOf('https') >= 0);
-      $.get('/api?action=swagger', function(data) {
+      var url = '/api?action=swagger&secure=' + (window.location.protocol.indexOf('https') >= 0);
+      $.get(url, function(data) {
         if(data.error) {
-          $.get('/api/swagger', function(data) {
-            url = '/api/swagger';
+          url = '/api/swagger&secure=' + (window.location.protocol.indexOf('https') >= 0);
+          $.get(url, function(data) {
             d.resolve(url);
           });
         } else {
           d.resolve(url);
         }
       }).fail(function() {
-        url = '/api/swagger';
+        url = '/api/swagger&secure=' + (window.location.protocol.indexOf('https') >= 0);
         d.resolve(url);
       });
       d.promise().then(function(url) {
@@ -65,7 +65,7 @@
           },
           //docExpansion: "list",
           docExpansion: "none",
-          apisSorter: "alpha"
+          apisSorter: "alpha",
           //showRequestHeaders: true,
           showRequestHeaders: false,
           // Only useful in testing, comment out below to have swagger hit the online validator.

@@ -117,6 +117,10 @@ module.exports = {
               }
             }
 
+            if (required.length > 0) {
+              definition.required = required;
+            }
+
             for ( var key in action.headers) {
               var input = action.headers[key];
               api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
@@ -282,6 +286,10 @@ module.exports = {
                   if (input.required) {
                     required.push(key);
                   }
+                }
+
+                if (required.length > 0) {
+                  definition.required = required;
                 }
 
                 for ( var key in action.headers) {
