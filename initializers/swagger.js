@@ -5,12 +5,20 @@ module.exports = {
     var actions = api.actions.actions;
 
     var actionUrl = 'api';
-    var bindIp = api.utils.getExternalIPAddress();
+    var serverIp = api.utils.getExternalIPAddress();
     var serverPort = null;
 
     if (config.servers.web) {
       serverPort = config.servers.web.port;
       actionUrl = config.servers.web.urlPathForActions;
+    }
+
+    if (config.swagger.hostOverride) {
+      serverIp = config.swagger.hostOverride;
+    }
+
+    if (config.swagger.portOverride) {
+      serverPort = config.swagger.portOverride;
     }
 
     var buildPath = function(route, action, parameters, tags) {
@@ -22,7 +30,7 @@ module.exports = {
         parameters: parameters,
         tags: (Array.isArray(tags) && tags.length > 0 ? tags : undefined)
       };
-      if (action.outputExample && typeof action.outputExample !== 'undefined' &&
+      if (action.outputExample && typeof action.outputExample === 'object' &&
           Object.getOwnPropertyNames(action.outputExample) > 0) {
         info.responses = {
           "default": {
@@ -47,7 +55,7 @@ module.exports = {
           version: "" + config.general.apiVersion
         },
 
-        host: (config.swagger.baseUrl || bindIp) + ':' + serverPort,
+        host: config.swagger.baseUrl || (serverIp + ':' + serverPort),
         actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
         schemes: [ 'http' ],

@@ -26,7 +26,7 @@
     $(function () {
       // Somewhat of a stop-gap for the interim until we can fully detect local server settings.
       var d = $.Deferred();
-      var url = '/api?action=swagger';
+      var url = '/api?action=swagger&isSecure=' + (window.location.protocol.indexOf('https') >= 0);
       $.get('/api?action=swagger', function(data) {
         if(data.error) {
           $.get('/api/swagger', function(data) {
@@ -63,8 +63,13 @@
           onFailure: function(data) {
             log("Unable to Load SwaggerUI");
           },
+          //docExpansion: "list",
           docExpansion: "none",
           apisSorter: "alpha"
+          //showRequestHeaders: true,
+          showRequestHeaders: false,
+          // Only useful in testing, comment out below to have swagger hit the online validator.
+          validatorUrl: null
         });
   
         function addApiKeyAuthorization(){

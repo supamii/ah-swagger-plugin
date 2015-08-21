@@ -16,7 +16,11 @@ exports['default'] = {
       // Set true if you want to organize actions by version
       groupByVersionTag: true,
       // For simple routes, groups all actions under a single category
-      groupBySimpleActionTag: true
+      groupBySimpleActionTag: true,
+      // In some cases where actionhero network topology needs to point elsewhere
+      hostOverride: null,
+      // Same as above
+      portOverride: null
     }
   }
 }
