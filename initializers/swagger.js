@@ -97,7 +97,8 @@ module.exports = {
                 "in": input.paramType || 'query',
                 type: input.dataType || 'string',
                 enum: input.enum || undefined,
-                description: input.description || undefined
+                description: input.description || undefined,
+                required: input.required
               };
               parameters.push({
                 $ref: "#/parameters/action_" + action.name + version + "_" + key
@@ -121,7 +122,8 @@ module.exports = {
                 "in": 'header',
                 type: 'string',
                 enum: input.enum || undefined,
-                description: input.description || undefined
+                description: input.description || undefined,
+                required: input.required
               };
               parameters.push({
                 $ref: "#/parameters/action_" + action.name + version + "_" + key
@@ -280,7 +282,8 @@ module.exports = {
                     "in": input.paramType || (params[key] ? 'path' : 'query'),
                     type: input.dataType || 'string',
                     enum: input.enum || undefined,
-                    description: input.description || undefined
+                    description: input.description || undefined,
+                    required: input.required
                   };
                   parameters.push({
                     $ref: "#/parameters/" + paramStr
@@ -304,7 +307,8 @@ module.exports = {
                     "in": 'header',
                     type: 'string',
                     enum: input.enum || undefined,
-                    description: input.description || undefined
+                    description: input.description || undefined,
+                    required: input.required
                   };
                   parameters.push({
                     $ref: "#/parameters/" + route.action + version + "_" + key
