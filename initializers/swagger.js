@@ -30,18 +30,11 @@ module.exports = {
         parameters: parameters,
         tags: (Array.isArray(tags) && tags.length > 0 ? tags : undefined)
       };
-      if (action.outputExample && typeof action.outputExample === 'object' &&
-          Object.getOwnPropertyNames(action.outputExample) > 0) {
-        info.responses = {
-          "default": {
-            description: 'successful operation',
-            schema: {
-              items: {
-                $ref: "#/definitions/" + operationId
-              }
-            }
-          }
-        };
+      if (action.responseSchemas && typeof action.responseSchemas !== 'undefined') {
+        // TODO: We'll assign the whole thing, but there are swagger bugs/limitations with inline
+        // schemas so we'll have to think of an elegant way to reference schemas instead if we 
+        // want to demonstrate multiple types of responses e.g. 300's, 400's, etc.
+        info.responses = action.responseSchemas;
       }
       return info;
     };
@@ -174,13 +167,25 @@ module.exports = {
               switch (method.toLowerCase()) {
                 case 'put':
                 case 'post':
-                  params.push({
-                    name: 'body',
-                    "in": 'body',
-                    schema: {
-                      $ref: "#/definitions/action_" + action.name + version
-                    }
-                  });
+                  if (action.modelSchema) {
+                    params.push({
+                      name: 'body',
+                      "in": 'body',
+                      description: 'Body of the post/put action',
+                      schema: {
+                        $ref: "#/definitions/action_" + action.name + version
+                      }
+                    });
+                  } else {
+                    params.push({
+                      name: 'body',
+                      "in": 'body',
+                      description: 'Body of the post/put action',
+                      schema: {
+                        type: 'object'
+                      }
+                    });
+                  }
                   break;
                 default:
                   break;
@@ -324,13 +329,25 @@ module.exports = {
                 switch (method.toLowerCase()) {
                   case 'put':
                   case 'post':
-                    parameters.push({
-                      name: 'body',
-                      "in": 'body',
-                      schema: {
-                        $ref: "#/definitions/" + action.name + version
-                      }
-                    });
+                    if (action.modelSchema) {
+                      parameters.push({
+                        name: 'body',
+                        "in": 'body',
+                        description: 'Body of the post/put action',
+                        schema: {
+                          $ref: "#/definitions/" + action.name + version
+                        }
+                      });
+                    } else {
+                      parameters.push({
+                        name: 'body',
+                        "in": 'body',
+                        description: 'Body of the post/put action',
+                        schema: {
+                          type: 'object'
+                        }
+                      });
+                    }
                     break;
                   default:
                     break;

@@ -53,8 +53,9 @@ To override default configurations, define the namespace api.config.swagger:
 exports['default'] = { 
   swagger: function(api){
     return {
-      // Should be changed to hit www.yourserver.com
-      baseUrl: '127.0.0.1',
+      // Should be changed to hit www.yourserver.com.  If this is null, defaults to ip:port from
+      // internal values or from hostOverride and portOverride.
+      baseUrl: '127.0.0.1:8080',
       // Specify routes that don't need to be displayed
       ignoreRoutes: [ '/swagger' ],
       // Specify how routes are grouped
@@ -68,7 +69,12 @@ exports['default'] = {
       // Set true if you want to organize actions by version
       groupByVersionTag: true,
       // For simple routes, groups all actions under a single category
-      groupBySimpleActionTag: true
+      groupBySimpleActionTag: true,
+      // In some cases where actionhero network topology needs to point elsewhere.  If null, uses
+      // api.config.swagger.baseUrl
+      hostOverride: null,
+      // Same as above, if null uses the internal value set in config/server/web.js
+      portOverride: null
     }
   }
 }
@@ -86,6 +92,25 @@ exports.myAction = {
   name: 'myAction',
   summary: 'A simple summary of my action',
   description: 'A detailed description of my action.',
+  responseSchemas: {
+    // By default set this 200 property to provide a sample response in the form of a JSON schema
+    // object.  Since schemas can get pretty bulky, consider requiring a file instead of having 
+    // everything in-line.  E.g. '200': require('myResponseSchema.js')
+    // 
+    // It's also possible to automate schema generation with json-schema-generator with json-patch.
+    '200': {
+      description: 'Sample http 200 response',
+      schema: {
+        type: 'object',
+        properties: {
+          'marco': {
+            type: 'string',
+            example: 'polo'
+          }
+        }
+      }
+    }
+  },
   inputs: {
     required: [ 'myParam' ],
     // Each input parameter needs to be defined as a property, including input parameters for routes.

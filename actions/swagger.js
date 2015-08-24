@@ -2,7 +2,20 @@ exports.swagger = {
   name: 'swagger',
   description: 'Returns Swagger JSON',
   summary: 'Swagger Data',
-  outputExample: {},
+  responseSchemas: {
+    '200': {
+      description: 'Sample response',
+      schema: {
+        type: 'object',
+        properties: {
+          'swagger': {
+            type: 'string',
+            example: 'Swagger 2.0'
+          }
+        }
+      }
+    }
+  },
   inputs: {
     secure: {
       required: false
