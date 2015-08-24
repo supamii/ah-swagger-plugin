@@ -2,7 +2,7 @@
   "author": "Son-Huy Pham <huytard.pham@gmail.com>",
   "name": "ah-swagger-plugin",
   "description": "Actionhero plugin that supports swagger",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "homepage": "https://github.com/supamii/ah-swagger-plugin",
   "license": "MIT",
   "repository": {
