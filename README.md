@@ -146,7 +146,6 @@ LIMITATIONS:
 TODOs:
 
 * Make swagger html files optional or easily over-ridden
-* Follow up to see how swagger will honor the 'required' param type
 * Include tests
 
 ## Credits
