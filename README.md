@@ -121,7 +121,7 @@ exports.myAction = {
       enum: [ 'value1', 'value2', 'value3' ]
     }
   },
-  // For the body of a post/put, specify example output.
+  // For post/put http requests, describing the body is set here in JSON schema form.
   modelSchema: {
     myParam: {
       type: 'string',
