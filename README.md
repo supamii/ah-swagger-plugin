@@ -8,8 +8,6 @@ Generate Swagger-UI documentation from Actionhero
 **[NPM](https://www.npmjs.com/package/ah-swagger-plugin) | [GitHub](https://github.com/supamii/ah-swagger-plugin) | [Chat](https://gitter.im/supamii/ah-swagger-plugin)**
 ***
 
-[![NPM](https://nodei.co/npm/ah-swagger-plugin.png?stars=true)](https://nodei.co/npm/ah-swagger-plugin/)
-
 ## Install
 
 - `npm install ah-swagger-plugin --save`
