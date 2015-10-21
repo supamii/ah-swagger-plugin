@@ -24,7 +24,7 @@ Add the plugin to config/plugins.js:
 
 Add this plugin to the public paths listing so the static assets can be sourced:
 
-```// in `/config/api.js`
+```// in /config/api.js
 paths: {
         'action':      [ __dirname + '/../actions'      ] ,
         'task':        [ __dirname + '/../tasks'        ] ,
