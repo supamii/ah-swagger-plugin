@@ -26,18 +26,18 @@ Add this plugin to the public paths listing so the static assets can be sourced:
 
 ```// in /config/api.js
 paths: {
-        'action':      [ __dirname + '/../actions'      ] ,
-        'task':        [ __dirname + '/../tasks'        ] ,
-        'public':      [ 
-          __dirname + '/../public', 
-          __dirname + '/../node_modules/ah-swagger-plugin/public'       
-        ] ,
-        'pid':         [ __dirname + '/../pids'         ] ,
-        'log':         [ __dirname + '/../log'          ] ,
-        'server':      [ __dirname + '/../servers'      ] ,
-        'initializer': [ __dirname + '/../initializers' ] ,
-        'plugin':      [ __dirname + '/../node_modules' ] 
-      },
+  'action':      [ __dirname + '/../actions'      ] ,
+  'task':        [ __dirname + '/../tasks'        ] ,
+  'public':      [
+    __dirname + '/../public', 
+    __dirname + '/../node_modules/ah-swagger-plugin/public'
+  ] ,
+  'pid':         [ __dirname + '/../pids'         ] ,
+  'log':         [ __dirname + '/../log'          ] ,
+  'server':      [ __dirname + '/../servers'      ] ,
+  'initializer': [ __dirname + '/../initializers' ] ,
+  'plugin':      [ __dirname + '/../node_modules' ]
+},
 ```
 
 ## Setup
