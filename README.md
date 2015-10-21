@@ -12,17 +12,32 @@ Generate Swagger-UI documentation from Actionhero
 
 - `npm install ah-swagger-plugin --save`
 
-Be sure to specify the location of the installed plugin in /config/api.js
+Add the plugin to config/plugins.js:
+```exports['default'] = {
+  general: function(api){
+    return {
+      plugins: [ 'ah-swagger-plugin' ]
+    };
+  }
+};
+```
 
-For example, if you list ah-swagger-plugin as an NPM dependency you can point directly to node_modules:
+Add this plugin to the public paths listing so the static assets can be sourced:
 
-```javascript
-// ...
-// configuration for your actionhero project structure
+```// in `/config/api.js`
 paths: {
-  //... 
-  'plugin': [ __dirname + '/../node_modules' ]
-},
+        'action':      [ __dirname + '/../actions'      ] ,
+        'task':        [ __dirname + '/../tasks'        ] ,
+        'public':      [ 
+          __dirname + '/../public', 
+          __dirname + '/../node_modules/ah-swagger-plugin/public'       
+        ] ,
+        'pid':         [ __dirname + '/../pids'         ] ,
+        'log':         [ __dirname + '/../log'          ] ,
+        'server':      [ __dirname + '/../servers'      ] ,
+        'initializer': [ __dirname + '/../initializers' ] ,
+        'plugin':      [ __dirname + '/../node_modules' ] 
+      },
 ```
 
 ## Setup
@@ -35,9 +50,7 @@ exports['default'] = {
   {
     return {
       plugins: [
-        // ...
         'ah-swagger-plugin'
-        
       ]
     };
   }
@@ -45,41 +58,6 @@ exports['default'] = {
 ```
 
 For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/core/plugins.html).
-
-## Configuration
-
-To override default configurations, define the namespace api.config.swagger:
-
-```javascript
-exports['default'] = { 
-  swagger: function(api){
-    return {
-      // Should be changed to hit www.yourserver.com.  If this is null, defaults to ip:port from
-      // internal values or from hostOverride and portOverride.
-      baseUrl: '127.0.0.1:8080',
-      // Specify routes that don't need to be displayed
-      ignoreRoutes: [ '/swagger' ],
-      // Specify how routes are grouped
-      routeTags : {
-        'basics' : [ 'showDocumentation', 'status' ]
-      },
-      // Generate documentation for simple actions specified by action-name
-      documentSimpleRoutes: true,
-      // Generate documentation for actions specified under config/routes.js
-      documentConfigRoutes: true,
-      // Set true if you want to organize actions by version
-      groupByVersionTag: true,
-      // For simple routes, groups all actions under a single category
-      groupBySimpleActionTag: true,
-      // In some cases where actionhero network topology needs to point elsewhere.  If null, uses
-      // api.config.swagger.baseUrl
-      hostOverride: null,
-      // Same as above, if null uses the internal value set in config/server/web.js
-      portOverride: null
-    }
-  }
-}
-```
 
 ## Overview
 This plugin will create an end-point that analyzes your Actionhero routes and provides JSON for swagger to consume.
@@ -150,6 +128,41 @@ TODOs:
 * Include tests
 
 ![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
+
+## Advanced Configuration
+
+To override default configurations, define the namespace api.config.swagger:
+
+```javascript
+exports['default'] = { 
+  swagger: function(api){
+    return {
+      // Should be changed to hit www.yourserver.com.  If this is null, defaults to ip:port from
+      // internal values or from hostOverride and portOverride.
+      baseUrl: '127.0.0.1:8080',
+      // Specify routes that don't need to be displayed
+      ignoreRoutes: [ '/swagger' ],
+      // Specify how routes are grouped
+      routeTags : {
+        'basics' : [ 'showDocumentation', 'status' ]
+      },
+      // Generate documentation for simple actions specified by action-name
+      documentSimpleRoutes: true,
+      // Generate documentation for actions specified under config/routes.js
+      documentConfigRoutes: true,
+      // Set true if you want to organize actions by version
+      groupByVersionTag: true,
+      // For simple routes, groups all actions under a single category
+      groupBySimpleActionTag: true,
+      // In some cases where actionhero network topology needs to point elsewhere.  If null, uses
+      // api.config.swagger.baseUrl
+      hostOverride: null,
+      // Same as above, if null uses the internal value set in config/server/web.js
+      portOverride: null
+    }
+  }
+}
+```
 
 ## Credits
 
