@@ -149,6 +149,8 @@ TODOs:
 * Make swagger html files optional or easily over-ridden
 * Include tests
 
+![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
+
 ## Credits
 
 Props go out to [@BoLaMN](https://github.com/BoLaMN) for laying the ground work on cracking the translation between Swagger and Actionhero.
