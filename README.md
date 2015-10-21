@@ -8,7 +8,7 @@ Generate Swagger-UI documentation from Actionhero
 **[NPM](https://www.npmjs.com/package/ah-swagger-plugin) | [GitHub](https://github.com/supamii/ah-swagger-plugin) | [Chat](https://gitter.im/supamii/ah-swagger-plugin)**
 ***
 
-## Install
+## Install & Setup
 
 - `npm install ah-swagger-plugin --save`
 
@@ -40,23 +40,6 @@ paths: {
   'initializer': [ __dirname + '/../initializers' ] ,
   'plugin':      [ __dirname + '/../node_modules' ]
 },
-```
-
-## Setup
-
-As we do for all Actionhero plugins, add an entry 'ah-swagger-plugin' to /config/plugins.js
-
-```javascript
-exports['default'] = {
-  general: function(api)
-  {
-    return {
-      plugins: [
-        'ah-swagger-plugin'
-      ]
-    };
-  }
-};
 ```
 
 For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/core/plugins.html).
@@ -121,6 +104,8 @@ exports.myAction = {
 };
 ```
 
+![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
+
 LIMITATIONS:
 * Using an API key with a file-multiform-upload doesn't work as expected
 
@@ -128,8 +113,6 @@ TODOs:
 
 * Make swagger html files optional or easily over-ridden
 * Include tests
-
-![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
 
 ## Advanced Configuration
 
