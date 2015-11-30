@@ -39,7 +39,7 @@
           d.resolve(url);
         }
       }).fail(function() {
-        url = '/api/swagger&secure=' + (window.location.protocol.indexOf('https') >= 0);
+        url = '/api/swagger?secure=' + (window.location.protocol.indexOf('https') >= 0);
         d.resolve(url);
       });
       d.promise().then(function(url) {
