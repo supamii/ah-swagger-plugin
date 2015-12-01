@@ -42,6 +42,8 @@ paths: {
 },
 ```
 
+Then finally, so the UI can read the swagger data, ensure that the route `GET /api/swagger` is configured to point to the `swagger` action.
+
 For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/core/plugins.html).
 
 ## Overview
