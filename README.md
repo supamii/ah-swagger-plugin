@@ -2,6 +2,8 @@
 [![Gitter](http://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-2DCC76.svg?style=flat)](https://gitter.im/supamii/ah-swagger-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 # ah-swagger-plugin
+
+[![Join the chat at https://gitter.im/supamii/ah-swagger-plugin](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/supamii/ah-swagger-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Generate Swagger-UI documentation from Actionhero
 
 ***
