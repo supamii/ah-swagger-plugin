@@ -49,7 +49,7 @@ module.exports = {
         },
 
         host: config.swagger.baseUrl || (serverIp + ':' + serverPort),
-        actionPath: '/' + (actionUrl || 'swagger'),
+        //actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
         schemes: [ 'http' ],
         consumes: [ 'application/json' ],
