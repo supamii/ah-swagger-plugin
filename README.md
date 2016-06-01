@@ -12,7 +12,11 @@ Generate Swagger-UI documentation from Actionhero
 
 - `npm install ah-swagger-plugin --save`
 
-Add the plugin to config/plugins.js:
+**ONLY FOR ACTIONHERO v13.X**<br/>
+run `actionhero link --name=ah-swagger-plugin` to register the Swagger Plugin in ActionHero v13 <br/> - More information [here](http://www.actionherojs.com/docs/#including-plugins)
+
+**ONLY FOR ACTIONHERO v12.X or lower**<br/>
+- Add the plugin to config/plugins.js:<br/>
 ```javascript
 exports['default'] = {
   general: function(api){
@@ -105,6 +109,7 @@ exports.myAction = {
   }
 };
 ```
+- You can access the `http://127.0.0.1:8080/public/swagger.html` and see your project's documentation:
 
 ![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
 
