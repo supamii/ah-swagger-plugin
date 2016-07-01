@@ -11,38 +11,21 @@ Generate Swagger-UI documentation from Actionhero
 ## Install & Setup
 
 - `npm install ah-swagger-plugin --save`
+- run `actionhero link --name=ah-swagger-plugin` to register the Swagger Plugin in ActionHero v13 <br/>
+  - More information [here](http://www.actionherojs.com/docs/#including-plugins)
 
-Add the plugin to config/plugins.js:
-```javascript
-exports['default'] = {
-  general: function(api){
+Then finally, so the UI can read the swagger data, ensure that the route `GET /api/swagger` is configured to point to the `swagger` action. IE:
+```js
+exports.default = {
+  routes: function(api){
     return {
-      plugins: [ 'ah-swagger-plugin' ]
-    };
+      get: [
+        { path: '/swagger', action: 'swagger' }
+      ]
+    }
   }
 };
 ```
-
-Add this plugin to the public paths listing so the static assets can be sourced:
-
-```javascript
-// in /config/api.js
-paths: {
-  'action':      [ __dirname + '/../actions'      ] ,
-  'task':        [ __dirname + '/../tasks'        ] ,
-  'public':      [
-    __dirname + '/../public', 
-    __dirname + '/../node_modules/ah-swagger-plugin/public'
-  ] ,
-  'pid':         [ __dirname + '/../pids'         ] ,
-  'log':         [ __dirname + '/../log'          ] ,
-  'server':      [ __dirname + '/../servers'      ] ,
-  'initializer': [ __dirname + '/../initializers' ] ,
-  'plugin':      [ __dirname + '/../node_modules' ]
-},
-```
-
-Then finally, so the UI can read the swagger data, ensure that the route `GET /api/swagger` is configured to point to the `swagger` action.
 
 For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/core/plugins.html).
 
@@ -60,9 +43,9 @@ exports.myAction = {
   description: 'A detailed description of my action.',
   responseSchemas: {
     // By default set this 200 property to provide a sample response in the form of a JSON schema
-    // object.  Since schemas can get pretty bulky, consider requiring a file instead of having 
+    // object.  Since schemas can get pretty bulky, consider requiring a file instead of having
     // everything in-line.  E.g. '200': require('myResponseSchema.js')
-    // 
+    //
     // It's also possible to automate schema generation with json-schema-generator with json-patch.
     '200': {
       description: 'Sample http 200 response',
@@ -105,6 +88,7 @@ exports.myAction = {
   }
 };
 ```
+- You can access the `http://127.0.0.1:8080/public/swagger.html` and see your project's documentation:
 
 ![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
 
@@ -121,7 +105,7 @@ TODOs:
 To override default configurations, define the namespace api.config.swagger:
 
 ```javascript
-exports['default'] = { 
+exports['default'] = {
   swagger: function(api){
     return {
       // Should be changed to hit www.yourserver.com.  If this is null, defaults to ip:port from
@@ -178,4 +162,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
