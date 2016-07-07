@@ -28,7 +28,7 @@ exports.default = {
 };
 ```
 
-For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/core/plugins.html).
+For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/#plugins).
 
 ## Overview
 This plugin will create an end-point that analyzes your Actionhero routes and provides JSON for swagger to consume.
