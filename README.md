@@ -11,7 +11,8 @@ Generate Swagger-UI documentation from Actionhero
 ## Install & Setup
 
 - `npm install ah-swagger-plugin --save`
-- run `actionhero link --name=ah-swagger-plugin` to register the Swagger Plugin in ActionHero v13 (more information [here](http://www.actionherojs.com/docs/#including-plugins))
+- run `actionhero link --name=ah-swagger-plugin` to register the Swagger Plugin in ActionHero v13
+  * more information [here](http://www.actionherojs.com/docs/#including-plugins)
 
 Then finally, so the UI can read the swagger data, ensure that the route `GET /api/swagger` is configured to point to the `swagger` action.
 ```js
