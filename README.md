@@ -28,7 +28,11 @@ exports.default = {
 };
 ```
 
-For more information, checkout the [Actionhero docs](http://www.actionherojs.com/docs/#plugins).
+## More information
+
+Checkout the [Actionhero docs](http://www.actionherojs.com/docs/#plugins).
+
+Stuck with Actionhero 12 and below? Go ahead and specify ah-swagger-plugin **v0.0.15** in your package.json - Documentation is captured on github with [tag v0.0.16](https://github.com/supamii/ah-swagger-plugin/tree/v0.0.16)
 
 ## Overview
 This plugin will create an end-point that analyzes your Actionhero routes and provides JSON for swagger to consume.
