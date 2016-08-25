@@ -6,7 +6,7 @@
 @Last modified time: 2016-08-26T08:16:29+10:00
 -->
 
-
+[![npm version](https://badge.fury.io/js/ah-swagger-material-ui.svg)](https://badge.fury.io/js/ah-swagger-material-ui)
 
 # ah-swagger-material-ui
 Generate Beautiful Swagger Material UI Documentation for ActionHero. This work is based on [supamii/ah-swagger-plugin](https://github.com/supamii/ah-swagger-plugin) and [darosh/angular-swagger-ui-material](https://github.com/darosh/angular-swagger-ui-material).
@@ -90,7 +90,7 @@ exports.myAction = {
 ```
 - The Swagger material ui can be accessed at `http://127.0.0.1:8080/public/swagger`
 
-![alt tag](https://raw.github.com/guiguan/ah-swagger-material-ui/master/screenshot.png)
+![screenshot](https://raw.github.com/guiguan/ah-swagger-material-ui/master/screenshot.png)
 
 ## Advanced Configuration
 
