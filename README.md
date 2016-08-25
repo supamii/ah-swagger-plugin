@@ -92,14 +92,6 @@ exports.myAction = {
 
 ![alt tag](https://raw.github.com/guiguan/ah-swagger-material-ui/master/screenshot.png)
 
-LIMITATIONS:
-* Using an API key with a file-multiform-upload doesn't work as expected
-
-TODOs:
-
-* Make swagger html files optional or easily over-ridden
-* Include tests
-
 ## Advanced Configuration
 
 To override default configurations, define the namespace api.config.swagger:
@@ -134,6 +126,11 @@ exports['default'] = {
   }
 }
 ```
+
+## Limitations
+
+* Using an API key with a file-multiform-upload doesn't work as expected
+* `api.config.web.rootEndpointType` has to be configured as `file` in order for the UI to function correctly
 
 ## License
 The MIT License (MIT)
