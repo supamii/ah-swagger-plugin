@@ -1,20 +1,23 @@
 {
-  "author": "Son-Huy Pham <huytard.pham@gmail.com>",
-  "name": "ah-swagger-plugin",
-  "description": "Actionhero plugin that supports swagger",
+  "author": "Guan Gui <root@guiguan.net>",
+  "name": "ah-swagger-material-ui",
+  "description": "Generate beautiful Swagger material UI documentation for ActionHero",
   "version": "1.0.0",
-  "homepage": "https://github.com/supamii/ah-swagger-plugin",
+  "homepage": "https://github.com/guiguan/ah-swagger-material-ui",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url" : "git://github.com/supamii/ah-swagger-plugin.git"
+    "url" : "git@github.com:guiguan/ah-swagger-material-ui.git"
   },
-  "bugs" : "https://github.com/supamii/ah-swagger-plugin/issues",
+  "bugs" : "https://github.com/guiguan/ah-swagger-material-ui/issues",
   "keywords": [
     "swagger",
     "actionhero",
     "ah",
-    "plugin"
+    "plugin",
+    "material ui",
+    "docs",
+    "documentation"
   ],
   "dependencies": {
   },

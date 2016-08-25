@@ -1,9 +1,22 @@
-exports['default'] = { 
+/**
+ * @Author: Guan Gui <guiguan>
+ * @Date:   2016-08-23T23:24:05+10:00
+ * @Email:  root@guiguan.net
+ * @Last modified by:   guiguan
+ * @Last modified time: 2016-08-26T06:49:38+10:00
+ */
+
+
+
+var host = process.env.API_HOST || 'localhost';
+var port = process.env.API_PORT || 8080;
+
+exports['default'] = {
   swagger: function(api){
     return {
       // Should be changed to hit www.yourserver.com.  If this is null, defaults to ip:port from
       // internal values or from hostOverride and portOverride.
-      baseUrl: '127.0.0.1:8080',
+      baseUrl: host + ':' + port,
       // Specify routes that don't need to be displayed
       ignoreRoutes: [ '/swagger' ],
       // Specify how routes are grouped

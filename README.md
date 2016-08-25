@@ -1,17 +1,20 @@
+<!--
+@Author: Guan Gui <guiguan>
+@Date:   2016-08-23T23:24:05+10:00
+@Email:  root@guiguan.net
+@Last modified by:   guiguan
+@Last modified time: 2016-08-26T08:16:29+10:00
+-->
 
-[![Gitter](http://img.shields.io/badge/gitter-join%20chat%20%E2%86%92-2DCC76.svg?style=flat)](https://gitter.im/supamii/ah-swagger-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-# ah-swagger-plugin
-Generate Swagger-UI documentation from Actionhero
 
-***
-**[NPM](https://www.npmjs.com/package/ah-swagger-plugin) | [GitHub](https://github.com/supamii/ah-swagger-plugin) | [Chat](https://gitter.im/supamii/ah-swagger-plugin)**
-***
+# ah-swagger-material-ui
+Generate Beautiful Swagger Material UI Documentation for ActionHero. This work is based on [supamii/ah-swagger-plugin](https://github.com/supamii/ah-swagger-plugin) and [darosh/angular-swagger-ui-material](https://github.com/darosh/angular-swagger-ui-material).
 
 ## Install & Setup
 
-- `npm install ah-swagger-plugin --save`
-- run `actionhero link --name=ah-swagger-plugin` to register the Swagger Plugin in ActionHero v13
+- `npm install -S ah-swagger-material-ui`
+- run `actionhero link --name=ah-swagger-material-ui` to register the Swagger Plugin in ActionHero v13
   * more information [here](http://www.actionherojs.com/docs/#including-plugins)
 
 Then finally, so the UI can read the swagger data, ensure that the route `GET /api/swagger` is configured to point to the `swagger` action.
@@ -28,16 +31,8 @@ exports.default = {
 };
 ```
 
-## More information
-
-Checkout the [Actionhero docs](http://www.actionherojs.com/docs/#plugins).
-
-Stuck with Actionhero 12 and below? Go ahead and specify ah-swagger-plugin **v0.0.15** in your package.json - Documentation is captured on github with [tag v0.0.16](https://github.com/supamii/ah-swagger-plugin/tree/v0.0.16)
-
 ## Overview
-This plugin will create an end-point that analyzes your Actionhero routes and provides JSON for swagger to consume.
-
-For simplicity, a default index.html is provided under the ./public/swagger folder.  Contents are directly from the pre-compiled swagger-ui package.
+This plugin will analyse ActionHero routes, generate Swagger JSON, and display the JSON in a beautiful Swagger material ui.
 
 Below is an example of how an action can be defined:
 
@@ -93,9 +88,9 @@ exports.myAction = {
   }
 };
 ```
-- You can access the `http://127.0.0.1:8080/public/swagger` and see your project's documentation:
+- The Swagger material ui can be accessed at `http://127.0.0.1:8080/public/swagger`
 
-![alt tag](https://raw.github.com/supamii/ah-swagger-plugin/master/screenshot.png)
+![alt tag](https://raw.github.com/guiguan/ah-swagger-material-ui/master/screenshot.png)
 
 LIMITATIONS:
 * Using an API key with a file-multiform-upload doesn't work as expected
@@ -139,11 +134,6 @@ exports['default'] = {
   }
 }
 ```
-
-## Credits
-
-Props go out to [@BoLaMN](https://github.com/BoLaMN) for laying the ground work on cracking the translation between Swagger and Actionhero.
-
 
 ## License
 The MIT License (MIT)

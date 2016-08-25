@@ -1,3 +1,13 @@
+/**
+ * @Author: Guan Gui <guiguan>
+ * @Date:   2016-08-23T23:24:05+10:00
+ * @Email:  root@guiguan.net
+ * @Last modified by:   guiguan
+ * @Last modified time: 2016-08-26T07:55:29+10:00
+ */
+
+
+
 module.exports = {
   loadPriority: 1000,
   initialize: function(api, next) {
@@ -32,7 +42,7 @@ module.exports = {
       };
       if (action.responseSchemas && typeof action.responseSchemas !== 'undefined') {
         // TODO: We'll assign the whole thing, but there are swagger bugs/limitations with inline
-        // schemas so we'll have to think of an elegant way to reference schemas instead if we 
+        // schemas so we'll have to think of an elegant way to reference schemas instead if we
         // want to demonstrate multiple types of responses e.g. 300's, 400's, etc.
         info.responses = action.responseSchemas;
       }
@@ -66,7 +76,8 @@ module.exports = {
         }
       },
       build: function() {
-        var verbs = api.routes.verbs;
+        // only show POST by default for actionhero actions instead of all api.routes.verbs
+        var verbs = ['post'];
 
         for ( var actionName in actions) {
           for ( var version in actions[actionName]) {
