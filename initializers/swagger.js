@@ -3,7 +3,7 @@
  * @Date:   2016-08-23T23:24:05+10:00
  * @Email:  root@guiguan.net
  * @Last modified by:   guiguan
- * @Last modified time: 2016-08-26T07:55:29+10:00
+ * @Last modified time: 2016-08-28T02:37:13+10:00
  */
 
 
@@ -61,9 +61,9 @@ module.exports = {
         host: config.swagger.baseUrl || (serverIp + ':' + serverPort),
         //actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
-        schemes: [ 'http' ],
-        consumes: [ 'application/json' ],
-        produces: [ 'application/json' ],
+        schemes: ['http'],
+        consumes: ['application/json'],
+        produces: ['application/json'],
         paths: {},
         definitions: {},
         parameters: {
@@ -79,8 +79,8 @@ module.exports = {
         // only show POST by default for actionhero actions instead of all api.routes.verbs
         var verbs = ['post'];
 
-        for ( var actionName in actions) {
-          for ( var version in actions[actionName]) {
+        for (var actionName in actions) {
+          for (var version in actions[actionName]) {
 
             var action = actions[actionName][version];
             var parameters = [];
@@ -98,7 +98,7 @@ module.exports = {
 
             // TODO: Should leverage some stuff done below.
 
-            for ( var key in action.inputs) {
+            for (var key in action.inputs) {
               if (key == 'required' || key == 'optional') {
                 continue;
               }
@@ -126,7 +126,7 @@ module.exports = {
               definition.required = required;
             }
 
-            for ( var key in action.headers) {
+            for (var key in action.headers) {
               var input = action.headers[key];
               api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
                 name: key,
@@ -152,7 +152,7 @@ module.exports = {
             }
 
             if (config.swagger.groupBySimpleActionTag) {
-              tags.push('actions');
+              tags.push('\x7fAll Actions');
             }
 
             if (config.swagger.groupByVersionTag) {
@@ -210,7 +210,7 @@ module.exports = {
         }
 
         if (config.routes && config.swagger.documentConfigRoutes !== false) {
-          for ( var method in config.routes) {
+          for (var method in config.routes) {
             var routes = config.routes[method];
             for (var l = 0, len1 = routes.length; l < len1; l++) {
               var route = routes[l];
@@ -225,15 +225,15 @@ module.exports = {
                 continue;
 
               var actionByVersion = actions[route.action];
-              for ( var version in actionByVersion) {
+              for (var version in actionByVersion) {
 
                 var action = actionByVersion[version];
                 var parameters = [];
                 var required = [];
 
                 var tags = action.tags || [];
-                for ( var i in config.swagger.routeTags) {
-                  for ( var r in config.swagger.routeTags[i]) {
+                for (var i in config.swagger.routeTags) {
+                  for (var r in config.swagger.routeTags[i]) {
                     if (route.path.indexOf(config.swagger.routeTags[i][r]) > 0) {
                       tags.push(i);
                       break;
@@ -276,7 +276,7 @@ module.exports = {
                   api.swagger.documentation.paths["" + path] = {};
                 }
 
-                for ( var key in action.inputs) {
+                for (var key in action.inputs) {
                   if (key == 'required' || key == 'optional') {
                     continue;
                   }
@@ -311,7 +311,7 @@ module.exports = {
                   definition.required = required;
                 }
 
-                for ( var key in action.headers) {
+                for (var key in action.headers) {
                   var input = action.headers[key];
                   api.swagger.documentation.parameters[route.action + version + "_" + key] = {
                     name: key,
