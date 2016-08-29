@@ -3,7 +3,7 @@
  * @Date:   2016-08-23T23:24:05+10:00
  * @Email:  root@guiguan.net
  * @Last modified by:   guiguan
- * @Last modified time: 2016-08-26T06:49:38+10:00
+ * @Last modified time: 2016-08-29T19:03:26+10:00
  */
 
 
@@ -28,7 +28,7 @@ exports['default'] = {
       // Generate documentation for actions specified under config/routes.js
       documentConfigRoutes: true,
       // Set true if you want to organize actions by version
-      groupByVersionTag: true,
+      groupByVersionTag: false,
       // For simple routes, groups all actions under a single category
       groupBySimpleActionTag: true,
       // In some cases where actionhero network topology needs to point elsewhere.  If null, uses
