@@ -3,7 +3,7 @@
 @Date:   2016-08-23T23:24:05+10:00
 @Email:  root@guiguan.net
 @Last modified by:   guiguan
-@Last modified time: 2016-08-29T21:10:04+10:00
+@Last modified time: 2016-08-30T16:37:23+10:00
 -->
 
 [![npm version](https://badge.fury.io/js/ah-swagger-material-ui.svg)](https://badge.fury.io/js/ah-swagger-material-ui)
@@ -13,7 +13,7 @@ Generate Beautiful Swagger Material UI Documentation for ActionHero. This work i
 
 ![screenshot](https://raw.github.com/guiguan/ah-swagger-material-ui/master/screenshot.png)
 
-## Install & Setup
+## Installation & Setup
 
 - `npm install -S ah-swagger-material-ui`
 - Run `actionhero link --name=ah-swagger-material-ui` to register the Swagger Plugin in ActionHero 15+. [More details](http://www.actionherojs.com/docs/#including-plugins).

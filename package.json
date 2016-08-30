@@ -2,7 +2,7 @@
   "author": "Guan Gui <root@guiguan.net>",
   "name": "ah-swagger-material-ui",
   "description": "Generate beautiful Swagger material UI documentation for ActionHero",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "homepage": "https://github.com/guiguan/ah-swagger-material-ui",
   "license": "MIT",
   "repository": {

@@ -5,7 +5,7 @@
  * @Date:   2016-08-29T13:41:40+10:00
  * @Email:  root@guiguan.net
  * @Last modified by:   guiguan
- * @Last modified time: 2016-08-29T21:04:48+10:00
+ * @Last modified time: 2016-08-30T16:59:18+10:00
  */
 
 
@@ -14,7 +14,7 @@ module.exports = {
   initialize: function(api, next) {
     // set action middleware
     var middleware = {
-      name: 'actionParamTypeFormatter',
+      name: 'ah-swagger-material-ui',
       global: true,
       preProcessor: function(data, next) {
         var inputs = data.actionTemplate.inputs;
