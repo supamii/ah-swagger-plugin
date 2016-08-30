@@ -3,7 +3,7 @@
 @Date:   2016-08-23T23:24:05+10:00
 @Email:  root@guiguan.net
 @Last modified by:   guiguan
-@Last modified time: 2016-08-30T16:37:23+10:00
+@Last modified time: 2016-08-30T17:48:51+10:00
 -->
 
 [![npm version](https://badge.fury.io/js/ah-swagger-material-ui.svg)](https://badge.fury.io/js/ah-swagger-material-ui)
@@ -20,7 +20,7 @@ Generate Beautiful Swagger Material UI Documentation for ActionHero. This work i
 - Make changes in `config/swagger.js` accordingly
 - The Swagger material ui can be accessed at `http://127.0.0.1:8080/public/swagger`
 
-Then finally, so the UI can read the swagger data, ensure that the route `GET /api/swagger` is configured to point to the `swagger` action.
+Ensure that the route `GET /api/swagger` is configured to point to the `swagger` action.
 ```js
 // config/routes.js
 exports.default = {
