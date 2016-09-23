@@ -1,0 +1,3 @@
+[submodule "angular-swagger-ui-material"]
+	path = angular-swagger-ui-material
+	url = git@github.com:darosh/angular-swagger-ui-material.git

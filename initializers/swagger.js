@@ -1,5 +1,16 @@
+/**
+ * @Author: Guan Gui <guiguan>
+ * @Date:   2016-08-23T23:24:05+10:00
+ * @Email:  root@guiguan.net
+ * @Last modified by:   guiguan
+ * @Last modified time: 2016-08-29T20:42:13+10:00
+ */
+
+
+
 module.exports = {
   loadPriority: 1000,
+
   initialize: function(api, next) {
     var config = api.config;
     var actions = api.actions.actions;
@@ -30,12 +41,14 @@ module.exports = {
         parameters: parameters,
         tags: (Array.isArray(tags) && tags.length > 0 ? tags : undefined)
       };
-      if (action.responseSchemas && typeof action.responseSchemas !== 'undefined') {
-        // TODO: We'll assign the whole thing, but there are swagger bugs/limitations with inline
-        // schemas so we'll have to think of an elegant way to reference schemas instead if we 
-        // want to demonstrate multiple types of responses e.g. 300's, 400's, etc.
-        info.responses = action.responseSchemas;
-      }
+      // TODO need to follow Swagger standard and reuse ActionHero
+      // infrastructure as much as possible
+      // if (action.responseSchemas && typeof action.responseSchemas !== 'undefined') {
+      //   // TODO: We'll assign the whole thing, but there are swagger bugs/limitations with inline
+      //   // schemas so we'll have to think of an elegant way to reference schemas instead if we
+      //   // want to demonstrate multiple types of responses e.g. 300's, 400's, etc.
+      //   info.responses = action.responseSchemas;
+      // }
       return info;
     };
 
@@ -51,9 +64,9 @@ module.exports = {
         host: config.swagger.baseUrl || (serverIp + ':' + serverPort),
         //actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
-        schemes: [ 'http' ],
-        consumes: [ 'application/json' ],
-        produces: [ 'application/json' ],
+        schemes: ['http'],
+        consumes: ['application/json'],
+        produces: ['application/json'],
         paths: {},
         definitions: {},
         parameters: {
@@ -66,18 +79,20 @@ module.exports = {
         }
       },
       build: function() {
-        var verbs = api.routes.verbs;
+        // only show POST by default for actionhero actions instead of all api.routes.verbs
+        var verbs = ['post'];
 
-        for ( var actionName in actions) {
-          for ( var version in actions[actionName]) {
+        for (var actionName in actions) {
+          for (var version in actions[actionName]) {
 
             var action = actions[actionName][version];
             var parameters = [];
             var required = [];
-            var tags = action.tags || [];
+            var tags = action.tags ? action.tags.slice() : [];
             var params = {};
 
-            var definition = api.swagger.documentation.definitions[action.name] = {
+            var definition = api.swagger.documentation.definitions['action_' + action.name + version] = {
+              type: 'object',
               properties: {}
             };
 
@@ -85,17 +100,12 @@ module.exports = {
               continue;
             }
 
-            // TODO: Should leverage some stuff done below.
-
-            for ( var key in action.inputs) {
-              if (key == 'required' || key == 'optional') {
-                continue;
-              }
+            for (var key in action.inputs) {
               var input = action.inputs[key];
               api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
                 name: key,
-                "in": input.paramType || 'query',
-                type: input.dataType || 'string',
+                "in": input.in || action.in || 'query',
+                type: input.type || 'string',
                 enum: input.enum || undefined,
                 description: input.description || undefined,
                 required: input.required
@@ -115,43 +125,45 @@ module.exports = {
               definition.required = required;
             }
 
-            for ( var key in action.headers) {
-              var input = action.headers[key];
-              api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
-                name: key,
-                "in": 'header',
-                type: 'string',
-                enum: input.enum || undefined,
-                description: input.description || undefined,
-                required: input.required
-              };
-              parameters.push({
-                $ref: "#/parameters/action_" + action.name + version + "_" + key
-              });
-              definition.properties[key] = {
-                type: 'string'
-              };
-              if (input.required) {
-                required.push(key);
-              }
-            }
+            // for (var key in action.headers) {
+            //   var input = action.headers[key];
+            //   api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
+            //     name: key,
+            //     "in": 'header',
+            //     type: 'string',
+            //     enum: input.enum || undefined,
+            //     description: input.description || undefined,
+            //     required: input.required
+            //   };
+            //   parameters.push({
+            //     $ref: "#/parameters/action_" + action.name + version + "_" + key
+            //   });
+            //   definition.properties[key] = {
+            //     type: 'string'
+            //   };
+            //   if (input.required) {
+            //     required.push(key);
+            //   }
+            // }
 
             if (required.length > 0) {
               definition.required = required;
             }
 
             if (config.swagger.groupBySimpleActionTag) {
-              tags.push('actions');
+              tags.push('\x7fAll Actions');
             }
 
             if (config.swagger.groupByVersionTag) {
-              tags.push(version);
+              tags.push('\x7f' + version);
             }
 
-            api.swagger.documentation.definitions[action.name + version] = {
-              type: 'object',
-              properties: action.modelSchema
-            };
+            // TODO need to follow Swagger standard and reuse ActionHero
+            // infrastructure as much as possible
+            // api.swagger.documentation.definitions[action.name + version] = {
+            //   type: 'object',
+            //   properties: action.modelSchema
+            // };
 
             if (!api.swagger.documentation.paths["/" + action.name]) {
               api.swagger.documentation.paths["/" + action.name] = {};
@@ -169,25 +181,14 @@ module.exports = {
               switch (method.toLowerCase()) {
                 case 'put':
                 case 'post':
-                  if (action.modelSchema) {
-                    params.push({
-                      name: 'body',
-                      "in": 'body',
-                      description: 'Body of the post/put action',
-                      schema: {
-                        $ref: "#/definitions/action_" + action.name + version
-                      }
-                    });
-                  } else {
-                    params.push({
-                      name: 'body',
-                      "in": 'body',
-                      description: 'Body of the post/put action',
-                      schema: {
-                        type: 'object'
-                      }
-                    });
-                  }
+                  params.push({
+                    name: 'body',
+                    'in': 'body',
+                    description: 'Body of the post/put action',
+                    schema: {
+                      $ref: '#/definitions/action_' + action.name + version
+                    }
+                  });
                   break;
                 default:
                   break;
@@ -199,7 +200,7 @@ module.exports = {
         }
 
         if (config.routes && config.swagger.documentConfigRoutes !== false) {
-          for ( var method in config.routes) {
+          for (var method in config.routes) {
             var routes = config.routes[method];
             for (var l = 0, len1 = routes.length; l < len1; l++) {
               var route = routes[l];
@@ -214,15 +215,15 @@ module.exports = {
                 continue;
 
               var actionByVersion = actions[route.action];
-              for ( var version in actionByVersion) {
+              for (var version in actionByVersion) {
 
                 var action = actionByVersion[version];
                 var parameters = [];
                 var required = [];
 
-                var tags = action.tags || [];
-                for ( var i in config.swagger.routeTags) {
-                  for ( var r in config.swagger.routeTags[i]) {
+                var tags = action.tags ? action.tags.slice() : [];
+                for (var i in config.swagger.routeTags) {
+                  for (var r in config.swagger.routeTags[i]) {
                     if (route.path.indexOf(config.swagger.routeTags[i][r]) > 0) {
                       tags.push(i);
                       break;
@@ -231,7 +232,7 @@ module.exports = {
                 }
 
                 if (config.swagger.groupByVersionTag) {
-                  tags.push(version);
+                  tags.push('\x7f' + version);
                 }
 
                 // This works well for simple query paths etc, but we need some additional checks
@@ -265,22 +266,19 @@ module.exports = {
                   api.swagger.documentation.paths["" + path] = {};
                 }
 
-                for ( var key in action.inputs) {
-                  if (key == 'required' || key == 'optional') {
-                    continue;
-                  }
+                for (var key in action.inputs) {
                   var input = action.inputs[key];
 
                   // Unlike simple routes above, we'll need to distinguish between a path type
                   // (param for url portion) and then a query type (param for query string).
 
-                  var paramType = input.paramType || (params[key] ? 'path' : 'query');
+                  var paramType = input.in || action.in || (params[key] ? 'path' : 'query');
                   var paramStr = route.action + version + "_" + paramType + "_" + key;
 
                   api.swagger.documentation.parameters[paramStr] = {
                     name: key,
-                    "in": input.paramType || (params[key] ? 'path' : 'query'),
-                    type: input.dataType || 'string',
+                    "in": paramType,
+                    type: input.type || 'string',
                     enum: input.enum || undefined,
                     description: input.description || undefined,
                     required: input.required
@@ -300,58 +298,49 @@ module.exports = {
                   definition.required = required;
                 }
 
-                for ( var key in action.headers) {
-                  var input = action.headers[key];
-                  api.swagger.documentation.parameters[route.action + version + "_" + key] = {
-                    name: key,
-                    "in": 'header',
-                    type: 'string',
-                    enum: input.enum || undefined,
-                    description: input.description || undefined,
-                    required: input.required
-                  };
-                  parameters.push({
-                    $ref: "#/parameters/" + route.action + version + "_" + key
-                  });
-                  definition.properties[key] = {
-                    type: 'string'
-                  };
-                  if (input.required) {
-                    required.push(key);
-                  }
-                }
+                // for (var key in action.headers) {
+                //   var input = action.headers[key];
+                //   api.swagger.documentation.parameters[route.action + version + "_" + key] = {
+                //     name: key,
+                //     "in": 'header',
+                //     type: 'string',
+                //     enum: input.enum || undefined,
+                //     description: input.description || undefined,
+                //     required: input.required
+                //   };
+                //   parameters.push({
+                //     $ref: "#/parameters/" + route.action + version + "_" + key
+                //   });
+                //   definition.properties[key] = {
+                //     type: 'string'
+                //   };
+                //   if (input.required) {
+                //     required.push(key);
+                //   }
+                // }
 
                 if (required.length > 0) {
                   definition.required = required;
                 }
 
-                api.swagger.documentation.definitions[action.name + version] = {
-                  type: 'object',
-                  properties: action.modelSchema
-                };
+                // TODO need to follow Swagger standard and reuse ActionHero
+                // infrastructure as much as possible
+                // api.swagger.documentation.definitions[action.name + version] = {
+                //   type: 'object',
+                //   properties: action.modelSchema
+                // };
 
                 switch (method.toLowerCase()) {
                   case 'put':
                   case 'post':
-                    if (action.modelSchema) {
-                      parameters.push({
-                        name: 'body',
-                        "in": 'body',
-                        description: 'Body of the post/put action',
-                        schema: {
-                          $ref: "#/definitions/" + action.name + version
-                        }
-                      });
-                    } else {
-                      parameters.push({
-                        name: 'body',
-                        "in": 'body',
-                        description: 'Body of the post/put action',
-                        schema: {
-                          type: 'object'
-                        }
-                      });
-                    }
+                    parameters.push({
+                      name: 'body',
+                      "in": 'body',
+                      description: 'Body of the post/put action',
+                      schema: {
+                        $ref: "#/definitions/action_" + action.name + version
+                      }
+                    });
                     break;
                   default:
                     break;

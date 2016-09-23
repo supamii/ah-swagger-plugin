@@ -3,9 +3,6 @@
 *.swp
 *.DS_Store
 /.tern-project
-/.settings/
-/.settings/*
+/.settings
 /log
-/log/*
-/node_modules/
-/node_modules/*
+/node_modules
