@@ -1,11 +1,12 @@
 <!doctype html>
 <html ng-app="myApp">
+
 <head>
     <base href="/swagger/" />
     <meta charset="utf-8">
     <!-- TODO: dynamic title -->
     <title>Swagger Material UI</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <!-- styles CDN -->
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
@@ -22,25 +23,25 @@
         }
     </style>
 </head>
-<body ng-controller="DetailController as vm" layout="row" class="ng-cloak sw-ui-md"
-      ng-include="'views/app.layout.html'">
 
-<!-- scripts CDN -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/js-yaml/3.5.3/js-yaml.min.js"></script>
+<body ng-controller="DetailController as vm" layout="row" class="ng-cloak sw-ui-md" ng-include="'views/app.layout.html'">
 
-<!-- inject:js -->
-<script src="/swagger/scripts/swagger-ui-material.full.min.js"></script>
-<!-- endinject -->
+    <!-- scripts CDN -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-aria.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-sanitize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/js-yaml/3.5.3/js-yaml.min.js"></script>
 
-<script type="text/javascript">
-    angular.module('myApp', [
+    <!-- inject:js -->
+    <script src="/swagger/scripts/swagger-ui-material.full.min.js"></script>
+    <!-- endinject -->
+
+    <script type="text/javascript">
+        angular.module('myApp', [
                 'sw.ui.md',
                 // 'sw.plugin.auth',
                 'sw.plugin.markdown',
@@ -54,7 +55,7 @@
                 'sw.plugin.yaml'
                 // 'sw.plugin.externalReferences'
             ])
-            .config(function ($mdThemingProvider, $logProvider, $windowProvider) {
+            .config(function($mdThemingProvider, $logProvider, $windowProvider) {
                 var $window = $windowProvider.$get();
                 var search = {};
                 var query = $window.location.search.substring(1);
@@ -72,33 +73,37 @@
 
                 //noinspection JSUnresolvedFunction
                 $mdThemingProvider
-                        .theme('default')
-                        .primaryPalette(search.primary || 'teal')
-                        .accentPalette('accent')
-                        .warnPalette(search.warn || 'amber')
-                        .foregroundPalette[3] = 'rgba(0, 0, 0, 0.4)';
+                    .theme('default')
+                    .primaryPalette(search.primary || 'teal')
+                    .accentPalette('accent')
+                    .warnPalette(search.warn || 'amber')
+                    .foregroundPalette[3] = 'rgba(0, 0, 0, 0.4)';
 
                 if ($window.location.hostname !== 'localhost') {
                     $logProvider.debugEnabled(false);
                 }
             })
-            .run(function ($location, $mdToast, $log, $window, data) {
+            .run(function($location, $mdToast, $log, $window, data) {
                 //noinspection JSCheckFunctionSignatures
+                var queryStr = $window.location.search;
+                if (queryStr.indexOf('secure') === -1) {
+                    queryStr += '&secure=' + (window.location.protocol.indexOf('https') >= 0);
+                }
                 var swaggerUrl = $location.search()['url'] ||
-                        (/^\/swagger/.test($window.location.pathname) ? $window.location.origin + '/api/swagger?secure=' + (window.location.protocol.indexOf('https') >= 0) :
-                                '');
+                    (/^\/swagger/.test($window.location.pathname) ? $window.location.origin + '/api/swagger' + queryStr : '');
 
                 data.setUrl(swaggerUrl);
                 // data.validatorUrl = 'http://online.swagger.io/validator';
 
                 // error management
-                function myErrorHandler (error) {
+                function myErrorHandler(error) {
                     var e = error || {};
                     var m = 'Something is wrong';
                     $mdToast.show($mdToast.simple().textContent(e.statusText || e.message || m));
                     $log.error(error || m);
                 }
             });
-</script>
+    </script>
 </body>
+
 </html>

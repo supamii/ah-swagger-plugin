@@ -54,6 +54,9 @@ exports.myAction = {
   name: 'myAction',
   summary: 'A simple summary of my action',
   description: 'A detailed description of my action.',
+  // optional, auto-detect; default param location for inputs defined in this
+  // action; available options: path, query, body, header
+  in: 'query',
   inputs: {
     // Each input parameter needs to be defined as a property, including input
     // parameters for routes.
@@ -65,7 +68,7 @@ exports.myAction = {
       // formatter is presented, the param's type will be converted to the
       // correct type automatically. See `actionParamTypeFormatter.js`.
       type: 'string',
-      // optional, auto-detect; available options: query, body, header
+      // optional, auto-detect; available options: path, query, body, header
       in: 'query',
       // optional, default: undefined; define this as an enum if you want to
       // specify the list of possible values

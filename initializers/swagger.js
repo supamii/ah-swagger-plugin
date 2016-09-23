@@ -104,7 +104,7 @@ module.exports = {
               var input = action.inputs[key];
               api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
                 name: key,
-                "in": input.in || 'query',
+                "in": input.in || action.in || 'query',
                 type: input.type || 'string',
                 enum: input.enum || undefined,
                 description: input.description || undefined,
@@ -272,12 +272,12 @@ module.exports = {
                   // Unlike simple routes above, we'll need to distinguish between a path type
                   // (param for url portion) and then a query type (param for query string).
 
-                  var paramType = input.in || (params[key] ? 'path' : 'query');
+                  var paramType = input.in || action.in || (params[key] ? 'path' : 'query');
                   var paramStr = route.action + version + "_" + paramType + "_" + key;
 
                   api.swagger.documentation.parameters[paramStr] = {
                     name: key,
-                    "in": input.in || (params[key] ? 'path' : 'query'),
+                    "in": paramType,
                     type: input.type || 'string',
                     enum: input.enum || undefined,
                     description: input.description || undefined,
