@@ -52,7 +52,7 @@ module.exports = {
         //actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
         schemes: [ 'http' ],
-        consumes: [ 'application/json' ],
+        consumes: [ 'application/json', 'multipart/form-data' ],
         produces: [ 'application/json' ],
         paths: {},
         definitions: {},
@@ -92,23 +92,29 @@ module.exports = {
                 continue;
               }
               var input = action.inputs[key];
-              api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
-                name: key,
-                "in": input.paramType || 'query',
-                type: input.dataType || 'string',
-                enum: input.enum || undefined,
-                description: input.description || undefined,
-                required: input.required
-              };
-              parameters.push({
-                $ref: "#/parameters/action_" + action.name + version + "_" + key
-              });
-              definition.properties[key] = {
-                type: 'string'
-              };
-              if (input.required) {
-                required.push(key);
-              }
+			  
+			 
+			  
+			  api.swagger.documentation.parameters['action_' + action.name + version + "_" + key] = {
+				name: key,
+				"in": input.paramType || 'query',
+				type: input.dataType || 'string',
+				enum: input.enum || undefined,
+				description: input.description || undefined,
+				required: input.required
+			  };
+		 
+		  parameters.push({
+			$ref: "#/parameters/action_" + action.name + version + "_" + key
+		  });
+			  
+			  definition.properties[key] = {
+				type: 'string'
+			  };
+			  if (input.required) {
+				required.push(key);
+			  }
+			  
             }
 
             if (required.length > 0) {
@@ -165,7 +171,7 @@ module.exports = {
               parameters.forEach(function(p) {
                 params.push(p);
               });
-
+		
               switch (method.toLowerCase()) {
                 case 'put':
                 case 'post':
@@ -173,7 +179,7 @@ module.exports = {
                     params.push({
                       name: 'body',
                       "in": 'body',
-                      description: 'Body of the post/put action',
+			 description: 'Body of the post/put action',
                       schema: {
                         $ref: "#/definitions/action_" + action.name + version
                       }
@@ -276,24 +282,25 @@ module.exports = {
 
                   var paramType = input.paramType || (params[key] ? 'path' : 'query');
                   var paramStr = route.action + version + "_" + paramType + "_" + key;
-
-                  api.swagger.documentation.parameters[paramStr] = {
-                    name: key,
-                    "in": input.paramType || (params[key] ? 'path' : 'query'),
-                    type: input.dataType || 'string',
-                    enum: input.enum || undefined,
-                    description: input.description || undefined,
-                    required: input.required
-                  };
-                  parameters.push({
-                    $ref: "#/parameters/" + paramStr
-                  });
-                  definition.properties[key] = {
-                    type: 'string'
-                  };
-                  if (input.required) {
-                    required.push(key);
-                  }
+			if(input.paramType!='body'){
+				  api.swagger.documentation.parameters[paramStr] = {
+					name: key,
+					"in": input.paramType || (params[key] ? 'path' : 'query'),
+					type: input.dataType || 'string',
+					enum: input.enum || undefined,
+					description: input.description || undefined,
+					required: input.required
+				  };
+				  parameters.push({
+					$ref: "#/parameters/" + paramStr
+				  });
+				  definition.properties[key] = {
+					type: 'string'
+				  };
+				  if (input.required) {
+					required.push(key);
+				  }
+			}
                 }
 
                 if (required.length > 0) {
