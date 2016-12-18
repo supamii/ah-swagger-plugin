@@ -52,7 +52,7 @@ module.exports = {
         //actionPath: '/' + (actionUrl || 'swagger'),
         basePath: '/' + (actionUrl || 'swagger'),
         schemes: [ 'http' ],
-        consumes: [ 'application/json' ],
+        consumes: [ 'application/json', 'multipart/form-data' ],
         produces: [ 'application/json' ],
         paths: {},
         definitions: {},
@@ -276,24 +276,25 @@ module.exports = {
 
                   var paramType = input.paramType || (params[key] ? 'path' : 'query');
                   var paramStr = route.action + version + "_" + paramType + "_" + key;
-
-                  api.swagger.documentation.parameters[paramStr] = {
-                    name: key,
-                    "in": input.paramType || (params[key] ? 'path' : 'query'),
-                    type: input.dataType || 'string',
-                    enum: input.enum || undefined,
-                    description: input.description || undefined,
-                    required: input.required
-                  };
-                  parameters.push({
-                    $ref: "#/parameters/" + paramStr
-                  });
-                  definition.properties[key] = {
-                    type: 'string'
-                  };
-                  if (input.required) {
-                    required.push(key);
-                  }
+		  if(input.paramType!='body'){  
+                    api.swagger.documentation.parameters[paramStr] = {
+                      name: key,
+                      "in": input.paramType || (params[key] ? 'path' : 'query'),
+                      type: input.dataType || 'string',
+                      enum: input.enum || undefined,
+                      description: input.description || undefined,
+                      required: input.required
+                    };
+                    parameters.push({
+                      $ref: "#/parameters/" + paramStr
+                    });
+                    definition.properties[key] = {
+                      type: 'string'
+                    };
+                    if (input.required) {
+                      required.push(key);
+                    }
+		  }
                 }
 
                 if (required.length > 0) {
