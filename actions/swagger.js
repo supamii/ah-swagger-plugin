@@ -1,34 +1,22 @@
-exports.swagger = {
-  name: 'swagger',
-  description: 'Returns Swagger JSON',
-  summary: 'Swagger Data',
-  responseSchemas: {
-    '200': {
-      description: 'Sample response',
-      schema: {
-        type: 'object',
-        properties: {
-          'swagger': {
-            type: 'string',
-            example: 'Swagger 2.0'
-          }
-        }
+const { Action, api } = require('actionhero')
+
+module.exports = class Swagger extends Action {
+  constructor () {
+    super()
+    this.name = 'swagger'
+    this.description = 'Returns Swagger JSON'
+    this.inputs = {
+      secure: {
+        required: false
       }
     }
-  },
-  inputs: {
-    secure: {
-      required: false
-    }
-  },
-  run: function(api, data, next) {
-    // Built by the swagger initializer.
-    data.response = api.swagger.documentation;
-
-    // Allows us to toggle on the swagger docs an support http vs https.
-    if (data.params.secure && (data.params.secure === true || data.params.secure === 'true')) {
-      data.response.schemes = [ 'https' ];
-    }
-    next();
   }
-};
+
+  async run (data) {
+    data.response = api.swagger.documentation
+
+    if (data.params.secure && (data.params.secure === true || data.params.secure === 'true')) {
+      data.response.schemes = ['https']
+    }
+  }
+}
