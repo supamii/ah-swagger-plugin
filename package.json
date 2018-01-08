@@ -25,5 +25,8 @@
   "devDependencies": {
     "babel-eslint": "^8.1.2",
     "standard": "^10.0.3"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
   }
 }

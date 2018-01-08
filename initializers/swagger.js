@@ -3,7 +3,6 @@ let { Initializer, api } = require('actionhero')
 module.exports = class Swagger extends Initializer {
   constructor () {
     super()
-
     this.name = 'swagger'
   }
 
